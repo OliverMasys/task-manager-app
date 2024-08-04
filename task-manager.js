@@ -1,18 +1,16 @@
 /**
  * Task Manager Application
  *
- * In this assignment, you will create a task manager application that allows users to add and remove tasks.
- * You will also implement features to filter tasks by their status and perform batch operations using functional programming concepts.
+ * In this assignment, you will create a task manager application that allows users to add, remove, and mark tasks as completed.
+ * You will also implement features to filter tasks by their status.
  *
- * Tasks are stored in an array and the application updates the display by rendering the contents
- * of this array. Your job is to complete the parts of the code base as indicated with the TODOs
- * in order to provide project functionality.
+ * Tasks are stored in an array and the application updates the display by rendering the contents of this array.
+ * Your job is to complete the parts of the code base as indicated with the TODOs in order to provide project functionality.
  *
  * Concepts covered in this project:
  * - Higher-order functions
  * - Callbacks
  * - Array methods (map, filter, reduce)
- * - Function composition and currying
  */
 
 const TaskManager = (function() {
@@ -27,50 +25,60 @@ const TaskManager = (function() {
     });
 
     // Function to add a task
-    // TODO: Implement this function using the provided createTask function
+    // Reference: Unit 2 - Higher-Order Functions and Callbacks
     const addTask = (title) => {
         // Add the new task to the tasks array
+        // TODO: Implement this function using the provided createTask function
+
         // Call renderTasks to update the display
+        renderTasks();
     };
 
     // Function to remove a task by id
-    // TODO: Implement this function to filter out the task with the specified id
+    // Reference: Unit 2 - Array Methods: map, filter, reduce
     const removeTask = (id) => {
         // Filter tasks array
+        // TODO: Implement this function to filter out the task with the specified id
+
         // Call renderTasks to update the display
+        renderTasks();
+    };
+
+    // Function to mark a task as completed
+    // Reference: Unit 2 - Array Methods: map, filter, reduce
+    const markTaskAsCompleted = (id) => {
+        // Map through tasks array to update the task status
+        // TODO: Implement this function to update the status of the specified task to 'completed'
+        
+        
+
+        // Call renderTasks to update the display
+        renderTasks();
     };
 
     // Function to filter tasks by status
-    // TODO: Implement this function to return tasks based on their status
+    // Reference: Unit 2 - Array Methods: map, filter, reduce
     const filterTasks = (status) => {
         // Return filtered tasks array
-    };
+        // TODO: Implement this function to return tasks based on their status
 
-    // Function composition and currying examples
-    // TODO: Implement function composition and currying for updating tasks
-    const updateTasks = (tasks, ...operations) => {
-        // Reduce through operations to apply them on tasks
-    };
-
-    // TODO: Implement currying for changing task status
-    const changeTaskStatus = (status) => (id) => {
-        // Map through tasks array to update task status
-        // Call renderTasks to update the display
     };
 
     // Render tasks to the DOM
-    const renderTasks = () => {
+    const renderTasks = (filteredTasks = tasks) => {
         const taskList = document.getElementById('taskList');
         taskList.innerHTML = '';
-        tasks.forEach(task => {
+        filteredTasks.forEach(task => {
             const taskItem = document.createElement('div');
             taskItem.className = 'list-group-item';
             taskItem.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h5>${task.title}</h5>
+                        ${task.status === 'completed' ? '<span class="badge bg-success">Completed</span>' : ''}
                     </div>
                     <div>
+                        <button class="btn btn-success btn-sm" onclick="TaskManager.markTaskAsCompleted(${task.id})" ${task.status === 'completed' ? 'disabled' : ''}>Complete</button>
                         <button class="btn btn-danger btn-sm" onclick="TaskManager.removeTask(${task.id})">Remove</button>
                     </div>
                 </div>
@@ -83,9 +91,9 @@ const TaskManager = (function() {
     return {
         addTask,
         removeTask,
+        markTaskAsCompleted,
         filterTasks,
-        updateTasks,
-        changeTaskStatus
+        renderTasks
     };
 })();
 
@@ -96,4 +104,19 @@ document.getElementById('addTaskBtn').addEventListener('click', () => {
         TaskManager.addTask(title);
         document.getElementById('taskTitle').value = '';
     }
+});
+
+// Example filter buttons
+document.getElementById('showAllTasksBtn').addEventListener('click', () => {
+    TaskManager.renderTasks();
+});
+
+document.getElementById('showPendingTasksBtn').addEventListener('click', () => {
+    const pendingTasks = TaskManager.filterTasks('pending');
+    TaskManager.renderTasks(pendingTasks);
+});
+
+document.getElementById('showCompletedTasksBtn').addEventListener('click', () => {
+    const completedTasks = TaskManager.filterTasks('completed');
+    TaskManager.renderTasks(completedTasks);
 });
