@@ -29,7 +29,7 @@ const TaskManager = (function() {
     const addTask = (title) => {
         // Add the new task to the tasks array
         // TODO: Implement this function using the provided createTask function
-
+        tasks.push(createTask(Title));
         // Call renderTasks to update the display
         renderTasks();
     };
