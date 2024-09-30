@@ -40,8 +40,7 @@ const TaskManager = (function() {
     const removeTask = (id) => {
         // Filter tasks array
         // TODO: Implement this function to filter out the task with the specified id
-        tasks = tasks.map(task => task.id ? { ... task, status: 'completed' } : task
-        );
+        tasks = tasks.filter(task => task.id !== id);
         // Call renderTasks to update the display
         renderTasks();
     };
@@ -51,8 +50,8 @@ const TaskManager = (function() {
     const markTaskAsCompleted = (id) => {
         // Map through tasks array to update the task status
         // TODO: Implement this function to update the status of the specified task to 'completed'
-        
-        
+        tasks = tasks.map(task => task.id === id ? { ...task, status: 'completed' }
+            : task );
 
         // Call renderTasks to update the display
         renderTasks();
