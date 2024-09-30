@@ -29,7 +29,8 @@ const TaskManager = (function() {
     const addTask = (title) => {
         // Add the new task to the tasks array
         // TODO: Implement this function using the provided createTask function
-        tasks.push(createTask(Title));
+        const newTask = createTask(title);
+        tasks.push(newTask);
         // Call renderTasks to update the display
         renderTasks();
     };
@@ -39,7 +40,8 @@ const TaskManager = (function() {
     const removeTask = (id) => {
         // Filter tasks array
         // TODO: Implement this function to filter out the task with the specified id
-
+        tasks = tasks.map(task => task.id ? { ... task, status: 'completed' } : task
+        );
         // Call renderTasks to update the display
         renderTasks();
     };
