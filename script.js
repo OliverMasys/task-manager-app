@@ -62,7 +62,7 @@ const TaskManager = (function() {
     const filterTasks = (status) => {
         // Return filtered tasks array
         // TODO: Implement this function to return tasks based on their status
-
+        return tasks.filter(task => task.status == status);
     };
 
     // Render tasks to the DOM
